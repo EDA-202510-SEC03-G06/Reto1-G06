@@ -1,11 +1,13 @@
+import csv
+import os
 import time
+from DataStructures.List import single_linked_list as lt
+from DataStructures.Queue import queue as q
+from DataStructures.Stack import stack as st
 
-def new_logic():
-    """
-    Crea el catalogo para almacenar las estructuras de datos
-    """
-    #TODO: Llama a las funciónes de creación de las estructuras de datos
-    pass
+data_dir = os.path.dirname(os.path.realpath('__file__')) + '/Data/'
+csv.field_size_limit(2147483647) 
+
 
 
 # Funciones para la carga de datos
@@ -15,8 +17,8 @@ def load_data(catalog, filename):
     Carga los datos del reto
     """
     # TODO: Realizar la carga de datos
-    pass
 
+ 
 # Funciones de consulta sobre el catálogo
 
 def get_data(catalog, id):
@@ -24,7 +26,7 @@ def get_data(catalog, id):
     Retorna un dato por su ID.
     """
     #TODO: Consulta en las Llamar la función del modelo para obtener un dato
-    pass
+    
 
 
 def req_1(catalog):
