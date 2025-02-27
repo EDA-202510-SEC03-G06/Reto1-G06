@@ -16,6 +16,15 @@ def load_data(catalog, filename):
     """
     Carga los datos del reto
     """
+    catalog["data"]=[]
+    archivo = open(filename,mode="r",encoding="uft-8")
+    lector = csv.reader(archivo)
+    encabezados = next(lector)
+    catalog["headers"] = encabezados
+    for fila in lector:
+        catalog["data"].append(fila)
+    archivo.close()
+    
     # TODO: Realizar la carga de datos
 
  
@@ -25,6 +34,10 @@ def get_data(catalog, id):
     """
     Retorna un dato por su ID.
     """
+    for registro in catalog["data"]:
+        if registro[0] == id:
+            return registro
+    return None
     #TODO: Consulta en las Llamar la función del modelo para obtener un dato
     
 
