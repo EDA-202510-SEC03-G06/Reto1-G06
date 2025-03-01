@@ -17,7 +17,8 @@ def load_data(catalog, filename):
     Carga los datos del reto
     """
     catalog["data"]=[]
-    archivo = open(filename,mode="r",encoding="uft-8")
+    filename =  "Data/" + filename
+    archivo = open(filename, mode="r", encoding="utf-8")
     lector = csv.reader(archivo)
     encabezados = next(lector)
     catalog["headers"] = encabezados
@@ -62,7 +63,7 @@ def req_1(catalog,anio):
         if registro[idx_year] == anio:
             registros_año.append(registro)
     if not registros_año:
-        return{"tiempo_ms":(time.time()- start_time)*1000,
+        return{"tiempo_ms": delta_time(start_time, get_time()),
                "total_reg":0,
                "ultimo_reg":None}
     ultimo_reg = registros_año[0]
@@ -70,7 +71,7 @@ def req_1(catalog,anio):
         if registro[idx_load_time] > ultimo_reg[idx_load_time]:
             ultimo_reg = registro
     resultado = {
-            "tiempo_ms": (time.time() - start_time) * 1000,
+            "tiempo_ms": delta_time(start_time, get_time()),
             "total_registros": len(registros_año),
             "ultimo_registro": {
             "year": ultimo_reg[idx_year],
