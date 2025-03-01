@@ -31,7 +31,7 @@ def load_data(control):
     Carga los datos
     """
     archivo = input("Ingrese el nombre del archivo CSV: ")
-    catalog = logic.load_data(catalog, archivo)
+    catalog = logic.load_data(control, archivo)
     print("")
     print("Carga completada")
     print("Archivo procesado:", archivo)
