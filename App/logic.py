@@ -17,7 +17,7 @@ def load_data(catalog, filename):
     Carga los datos del reto
     """
     catalog["data"]=[]
-    archivo = open(filename, mode="r", encoding="utf-8")
+    archivo = open(filename,mode="r",encoding="uft-8")
     lector = csv.reader(archivo)
     encabezados = next(lector)
     catalog["headers"] = encabezados
