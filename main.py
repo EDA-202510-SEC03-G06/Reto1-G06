@@ -1,4 +1,4 @@
-import App.view as view
+from App import view as view
 
 
 # Main function
