@@ -26,7 +26,7 @@ def load_data(catalog, filename):
     archivo.close()
     
     # TODO: Realizar la carga de datos
-
+    return catalog
  
 # Funciones de consulta sobre el catálogo
 
@@ -42,12 +42,48 @@ def get_data(catalog, id):
     
 
 
-def req_1(catalog):
+def req_1(catalog,anio):
     """
     Retorna el resultado del requerimiento 1
     """
+    start_time=time.time()
+    headers = catalog["headers"]
+    idx_year = headers.index('year_collection')
+    idx_load_time = headers.index('load_time')
+    idx_source = headers.index('source')
+    idx_frequency = headers.index('freq_collection')
+    idx_department = headers.index('state_name')
+    idx_product = headers.index('commodity')
+    idx_unit = headers.index('unit_measurement')
+    idx_value = headers.index('value')
+    registros_año=[]
+    
+    for registro in catalog["data"]:
+        if registro[idx_year] == anio:
+            registros_año.append(registro)
+    if not registros_año:
+        return{"tiempo_ms":(time.time()- start_time)*1000,
+               "total_reg":0,
+               "ultimo_reg":None}
+    ultimo_reg = registros_año[0]
+    for registro in registros_año:
+        if registro[idx_load_time] > ultimo_reg[idx_load_time]:
+            ultimo_reg = registro
+    resultado = {
+            "tiempo_ms": (time.time() - start_time) * 1000,
+            "total_registros": len(registros_año),
+            "ultimo_registro": {
+            "year": ultimo_reg[idx_year],
+            "fecha_carga": ultimo_reg[idx_load_time].split(" ")[0],
+            "fuente": ultimo_reg[idx_source],
+            "frecuencia": ultimo_reg[idx_frequency],
+            "departamento": ultimo_reg[idx_department],
+            "producto": ultimo_reg[idx_product],
+            "unidad": ultimo_reg[idx_unit],
+            "valor": ultimo_reg[idx_value]}}
+                                        
     # TODO: Modificar el requerimiento 1
-    pass
+    return resultado
 
 
 def req_2(catalog):

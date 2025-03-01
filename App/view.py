@@ -1,3 +1,4 @@
+from gettext import Catalog
 import sys
 import App.logic as logic
 
@@ -8,8 +9,9 @@ def new_logic():
     """
         Se crea una instancia del controlador
     """
+    catalog = {"data": [], "headers": []}
+    return catalog
     #TODO: Llamar la función de la lógica donde se crean las estructuras de datos
-    pass
 
 def print_menu():
     print("Bienvenido")
@@ -28,14 +30,25 @@ def load_data(control):
     """
     Carga los datos
     """
-    #TODO: Realizar la carga de datos
-    pass
+    archivo = input("Ingrese el nombre del archivo CSV: ")
+    catalog = logic.load_data(catalog, archivo)
+    print("")
+    print("Carga completada")
+    print("Archivo procesado:", archivo)
+    print("Total de registros cargados:", len(catalog["data"]))
+    print("Columnas detectadas:", ", ".join(catalog["headers"]))
 
 
 def print_data(control, id):
     """
         Función que imprime un dato dado su ID
     """
+    id = input("Ingrese el ID a buscar: ")
+    registro = logic.get_data(control ,id)
+    if registro:
+        print("Registro encontrado:", registro)
+    else:
+        print("Registro no encontrado.")
     #TODO: Realizar la función para imprimir un elemento
     pass
 
@@ -43,6 +56,24 @@ def print_req_1(control):
     """
         Función que imprime la solución del Requerimiento 1 en consola
     """
+    anio = input("ingrese el año a consultar (YYYY): ")
+    resultado, total, tiempo = logic.req_1(control, anio)
+    print("")
+    print("Requerimiento 1- resultados:")
+    print("Año consultado: ",anio)
+    print("Total de registros encontrados: ", total)
+    print("Tiempo de ejecución en milisegundos: ",tiempo)
+    resultado = resultado["ultimo registro"]
+    print("")
+    print("Registro más reciente:")
+    print("Año de recopilación:", resultado["year"])
+    print("Fecha de carga:", resultado["fecha_carga"])
+    print("Fuente:", resultado["fuente"])
+    print("Frecuencia:", resultado["frecuencia"])
+    print("Departamento:", resultado["departamento"])
+    print("Producto:", resultado["producto"])
+    print("Unidad:", resultado["unidad"])
+    print("Valor:", resultado["valor"])
     # TODO: Imprimir el resultado del requerimiento 1
     pass
 
