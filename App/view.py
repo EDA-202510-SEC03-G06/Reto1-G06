@@ -9,8 +9,8 @@ def new_logic():
     """
         Se crea una instancia del controlador
     """
-    control = {"data": [], "headers": []}
-    return control
+    catalog = {"data": [], "headers": []}
+    return catalog
     #TODO: Llamar la función de la lógica donde se crean las estructuras de datos
 
 def print_menu():
@@ -31,13 +31,12 @@ def load_data(control):
     Carga los datos
     """
     archivo = input("Ingrese el nombre del archivo CSV: ")
-    catalog = logic.load_data(control, archivo)
+    catalog = logic.load_data(catalog, archivo)
     print("")
     print("Carga completada")
     print("Archivo procesado:", archivo)
-    print("Total de registros cargados:", len(control["data"]))
-    print("Columnas detectadas:", ", ".join(control["headers"]))
-    return control
+    print("Total de registros cargados:", len(catalog["data"]))
+    print("Columnas detectadas:", ", ".join(catalog["headers"]))
 
 
 def print_data(control, id):
