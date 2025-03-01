@@ -63,7 +63,7 @@ def print_req_1(control):
     print("Año consultado: ",anio)
     print("Total de registros encontrados: ", total)
     print("Tiempo de ejecución en milisegundos: ",tiempo)
-    resultado = resultado["ultimo registro"]
+    resultado = resultado["ultimo_registro"]
     print("")
     print("Registro más reciente:")
     print("Año de recopilación:", resultado["year"])

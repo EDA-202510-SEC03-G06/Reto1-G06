@@ -84,7 +84,7 @@ def req_1(catalog,anio):
             "valor": ultimo_reg[idx_value]}}
                                         
     # TODO: Modificar el requerimiento 1
-    return resultado
+    return resultado, resultado["total_registros"], resultado["tiempo_ms"]
 
 
 def req_2(catalog):
