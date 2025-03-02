@@ -83,15 +83,59 @@ def print_req_2(control):
         Función que imprime la solución del Requerimiento 2 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 2
-    pass
+    
+    departamento = input("\n Ingrese el nombre del departamento a consultar: ").upper()
+    resultado, total, tiempo = logic.req_2(control, departamento)
 
+    if resultado:
+        print("\n• Requerimiento 2 - resultados:")
+        print(f"Año de recopilación: {resultado['year']}")
+        print(f"Fecha de carga: {resultado['fecha_carga']}")  
+        print(f"Tipo de fuente/origen: {resultado['fuente']}")
+        print(f"Frecuencia de la recopilación: {resultado['frecuencia']}")
+        print(f"Nombre del departamento: {resultado['departamento']}")
+        print(f"Tipo del producto: {resultado['producto']}")
+        print(f"Unidad de medición: {resultado['unidad']}")
+        print(f"Valor de la medición: {resultado['valor']}")
+    else:
+        print("⚠️ No se encontraron registros para ese departamento.")
+    
+    print(f"\n Total registros encontrados: {total}")
+    print(f" Tiempo de ejecución: {tiempo:.2f} ms")
 
 def print_req_3(control):
     """
         Función que imprime la solución del Requerimiento 3 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 3
-    pass
+    
+    departamento = input("\nIngrese el nombre del departamento a consultar: ").upper()
+    anio_inicial = int(input("Ingrese el año inicial del periodo a consultar: "))
+    anio_final = int(input("Ingrese el año final del periodo a consultar: "))
+
+    registros, total, total_survey, total_census, tiempo = logic.req_3(control, departamento, anio_inicial, anio_final)
+
+    print("\n• Requerimiento 3 - resultados:")
+    print(f"Total registros encontrados: {total}")
+    print(f"Registros con fuente SURVEY: {total_survey}")
+    print(f"Registros con fuente CENSUS: {total_census}")
+    print(f"Tiempo de ejecución: {tiempo:.2f} ms\n")
+
+    if total > 20:
+        registros_a_mostrar = registros[:5] + registros[-5:] 
+    else:
+        registros_a_mostrar = registros
+
+    for r in registros_a_mostrar:
+        print(f"\nTipo de fuente/origen: {r[0]}")
+        print(f"Año de recopilación: {r[6]}")
+        print(f"Fecha de carga: {r[9][:10]}")
+        print(f"Frecuencia de la recopilación: {r[7]}")
+        print(f"Tipo del producto: {r[1]}")
+        print(f"Unidad de medición: {r[3]}")
+
+    if total == 0:
+        print("⚠️ No se encontraron registros para el departamento en el rango de años especificado.")
 
 
 def print_req_4(control):
