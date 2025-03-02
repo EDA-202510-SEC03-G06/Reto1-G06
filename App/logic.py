@@ -124,12 +124,25 @@ def req_2(control, departamento):
 
     return resultado, len(registros), (time.time() - start_time) * 1000
 
-def req_3(catalog):
+def req_3(control, departamento, anio_inicial, anio_final):
     """
     Retorna el resultado del requerimiento 3
     """
     # TODO: Modificar el requerimiento 3
-    pass
+    start_time = time.time()
+
+    registros = []
+    for r in control["data"]:
+        if r[4].upper() == departamento.upper() and anio_inicial <= int(r[6]) <= anio_final:
+            registros.append(r)
+
+    total_registros = len(registros)
+    total_survey = sum(1 for r in registros if r[0] == "SURVEY")
+    total_census = sum(1 for r in registros if r[0] == "CENSUS")
+
+    tiempo_ejecucion = (time.time() - start_time) * 1000
+
+    return registros, total_registros, total_survey, total_census, tiempo_ejecucion
 
 
 def req_4(catalog):
