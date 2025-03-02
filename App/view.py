@@ -83,8 +83,24 @@ def print_req_2(control):
         Función que imprime la solución del Requerimiento 2 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 2
-    pass
+    departamento = input("\n Ingrese el nombre del departamento a consultar: ").upper()
+    resultado, total, tiempo = logic.req_2(control, departamento)
 
+    if resultado:
+        print("\n• Requerimiento 2 - resultados:")
+        print(f"Año de recopilación: {resultado['year']}")
+        print(f"Fecha de carga: {resultado['fecha_carga']}")  
+        print(f"Tipo de fuente/origen: {resultado['fuente']}")
+        print(f"Frecuencia de la recopilación: {resultado['frecuencia']}")
+        print(f"Nombre del departamento: {resultado['departamento']}")
+        print(f"Tipo del producto: {resultado['producto']}")
+        print(f"Unidad de medición: {resultado['unidad']}")
+        print(f"Valor de la medición: {resultado['valor']}")
+    else:
+        print("⚠️ No se encontraron registros para ese departamento.")
+    
+    print(f"\n Total registros encontrados: {total}")
+    print(f" Tiempo de ejecución: {tiempo:.2f} ms")
 
 def print_req_3(control):
     """
