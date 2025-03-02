@@ -64,7 +64,7 @@ def print_req_1(control):
     print("Total de registros encontrados: ", total)
     print("Tiempo de ejecución en milisegundos: ",tiempo)
     resultado = resultado["ultimo_registro"]
-    print("")
+    print("")   
     print("Registro más reciente:")
     print("Año de recopilación:", resultado["year"])
     print("Fecha de carga:", resultado["fecha_carga"])
@@ -106,6 +106,36 @@ def print_req_5(control):
     """
         Función que imprime la solución del Requerimiento 5 en consola
     """
+    categoria = input("Ingrese la categoría estadística a consultar (por ejemplo: INVENTORY, SALES, etc): ").strip().upper()
+    anio_inicio = input("Ingrese el año inicial (YYYY): ").strip()
+    anio_final = input("Ingrese el año final (YYYY): ").strip()
+    
+    resultado= logic.req_5(control, categoria, anio_inicio, anio_final)
+    
+    print("")
+    print("Categoria consultada: "+categoria)
+    print("Periodo consultado: "+ anio_inicio + "-" + anio_final)
+    print("Tiempo de ejecucion (ms): " + str(resultado["tiempo_ms"]))
+    print("Total de registros: " +  str(resultado["total_registros"]))
+    print("Total de registros SURVEY: "+ str(resultado["total_survey"]))
+    print("Total de registris CENSUS: "+ str(resultado["total_census"]))
+    
+    if resultado["total_registros"] == 0:
+        print("")
+        print("No se encontraron registros para el criterio dado.")
+    else:
+        print("")
+        print("Listado de registros:")
+
+        if resultado["total_registros"] > 20:
+            print("(Mostrando primeros 5 y últimos 5 registros)")
+            print("")
+        
+        for reg in resultado["registros"]:
+            print("Fuente: " + reg['source'] + " Año: " + reg['year'] + " Fecha de carga: " + reg['fecha_carga'])
+            print("Frecuencia: " + reg['frecuencia'] + " Departamento: " + reg['departamento'])
+            print("Unidad: " + reg['unidad'] + " Producto: " + reg['producto'])
+            print("")
     # TODO: Imprimir el resultado del requerimiento 5
     pass
 

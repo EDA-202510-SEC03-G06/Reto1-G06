@@ -111,12 +111,65 @@ def req_4(catalog):
     pass
 
 
-def req_5(catalog):
+def req_5(catalog, categoria, anio_inicio, anio_fin):
     """
     Retorna el resultado del requerimiento 5
     """
+    start_time=time.time()
+    headers = catalog["headers"]
+    idx_year = headers.index('year_collection')
+    idx_load_time = headers.index('load_time')
+    idx_source = headers.index('source')
+    idx_frequency = headers.index('freq_collection')
+    idx_department = headers.index('state_name')
+    idx_product = headers.index('commodity')
+    idx_unit = headers.index('unit_measurement')
+    idx_value = headers.index('value')
+    idx_category = headers.index("statical_category")
+    registros_fil = []
+    total_survey = 0
+    total_census = 0
+    
+    for registro in catalog["data"]:
+        anio = registro[idx_year]
+        
+        if registro[idx_category] == categoria and anio_inicio <= anio <= anio_fin:
+            registros_fil.append(registro)
+            
+            if registro[idx_source] == "SURVEY":
+                total_survey += 1
+            elif registro[idx_source] == "CENSUS":
+                total_census += 1
+                
+    tiempo_total = delta_time(start_time, get_time())
+    
+    registros_resultado = []
+    if len(registros_fil) > 20:
+        registros_most = registros_fil[:5] + registros_fil[-5:]
+    else:
+        registros_most = registros_fil
+    
+    for registro in registros_most:
+        registros_resultado.append({
+            "source": registro[idx_source],
+            "year": registro[idx_year],
+            "fecha_carga": registro[idx_load_time].split(" ")[0],
+            "frecuencia": registro[idx_frequency],
+            "departamento": registro[idx_department],
+            "unidad": registro[idx_unit],
+            "producto": registro[idx_product]
+        })
+        
+    resultado = {
+        "tiempo_ms": tiempo_total,
+        "total_registros": len(registros_fil),
+        "total_survey": total_survey,
+        "total_census": total_census,
+        "registros": registros_resultado
+    }
+        
     # TODO: Modificar el requerimiento 5
-    pass
+    return resultado
 
 def req_6(catalog):
     """
