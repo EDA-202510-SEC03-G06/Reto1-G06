@@ -47,14 +47,14 @@ def req_1(catalog,anio):
     """
     start_time=time.time()
     headers = catalog["headers"]
-    idx_year = headers.index('year_collection')
-    idx_load_time = headers.index('load_time')
-    idx_source = headers.index('source')
-    idx_frequency = headers.index('freq_collection')
-    idx_department = headers.index('state_name')
-    idx_product = headers.index('commodity')
-    idx_unit = headers.index('unit_measurement')
-    idx_value = headers.index('value')
+    idx_year = headers.index("year_collection")
+    idx_load_time = headers.index("load_time")
+    idx_source = headers.index("source")
+    idx_frequency = headers.index("freq_collection")
+    idx_department = headers.index("state_name")
+    idx_product = headers.index("commodity")
+    idx_unit = headers.index("unit_measurement")
+    idx_value = headers.index("value")
     registros_año=[]
     
     for registro in catalog["data"]:
@@ -159,14 +159,13 @@ def req_5(catalog, categoria, anio_inicio, anio_fin):
     """
     start_time=time.time()
     headers = catalog["headers"]
-    idx_year = headers.index('year_collection')
-    idx_load_time = headers.index('load_time')
-    idx_source = headers.index('source')
-    idx_frequency = headers.index('freq_collection')
-    idx_department = headers.index('state_name')
-    idx_product = headers.index('commodity')
-    idx_unit = headers.index('unit_measurement')
-    idx_value = headers.index('value')
+    idx_year = headers.index("year_collection")
+    idx_load_time = headers.index("load_time")
+    idx_source = headers.index("source")
+    idx_frequency = headers.index("freq_collection")
+    idx_department = headers.index("state_name")
+    idx_product = headers.index("commodity")
+    idx_unit = headers.index("unit_measurement")
     idx_category = headers.index("statical_category")
     registros_fil = []
     total_survey = 0
