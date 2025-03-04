@@ -213,13 +213,39 @@ def req_5(catalog, categoria, anio_inicio, anio_fin):
     # TODO: Modificar el requerimiento 5
     return resultado
 
-def req_6(catalog):
+def req_6(catalog, departamento, fecha_inicio, fecha_fin):
     """
     Retorna el resultado del requerimiento 6
     """
     # TODO: Modificar el requerimiento 6
-    pass
-
+    
+    start_time = time.time()
+    
+    registros_filtrados = [
+        reg for reg in catalog['data']
+        if reg[5].upper() == departamento.upper() and fecha_inicio <= reg[9][:10] <= fecha_fin
+    ]
+    
+    total_registros = len(registros_filtrados)
+    total_survey = sum(1 for reg in registros_filtrados if reg[0] == "SURVEY")
+    total_census = sum(1 for reg in registros_filtrados if reg[0] == "CENSUS")
+    
+    if total_registros > 20:
+        registros_mostrados = registros_filtrados[:5] + registros_filtrados[-5:]
+    else:
+        registros_mostrados = registros_filtrados
+    
+    execution_time = (time.time() - start_time) * 1000  
+    
+    resultado = {
+        "total_registros": total_registros,
+        "total_survey": total_survey,
+        "total_census": total_census,
+        "registros_mostrados": registros_mostrados,
+        "execution_time": execution_time
+    }
+    
+    return resultado
 
 def req_7(catalog):
     """

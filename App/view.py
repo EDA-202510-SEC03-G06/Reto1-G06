@@ -189,7 +189,36 @@ def print_req_6(control):
         Función que imprime la solución del Requerimiento 6 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 6
-    pass
+    
+    departamento = input("\nIngrese el nombre del departamento a consultar: ").upper()
+    fecha_inicio = input("Ingrese la fecha de inicio del periodo a consultar (YYYY-MM-DD): ")
+    fecha_fin = input("Ingrese la fecha de fin del periodo a consultar (YYYY-MM-DD): ")
+
+    resultado = logic.req_6(control, departamento, fecha_inicio, fecha_fin)
+
+    print("\nResultados de la consulta:")
+    print(f"Tiempo de ejecución: {resultado['execution_time']:.2f} ms")
+    print(f"Total de registros encontrados: {resultado['total_registros']}")
+    print(f"Total de registros con fuente 'SURVEY': {resultado['total_survey']}")
+    print(f"Total de registros con fuente 'CENSUS': {resultado['total_census']}")
+
+    print("\nRegistros encontrados:")
+    if resultado['total_registros'] > 20:
+        registros_mostrados = resultado['registros_mostrados']
+        print("(Mostrando primeros 5 y últimos 5 registros)")
+    else:
+        registros_mostrados = resultado['registros_mostrados']
+    
+    for registro in registros_mostrados:
+        print("-" * 80)
+        print(f"Fuente: {registro[0]}")
+        print(f"Año de recopilación: {registro[6]}")
+        print(f"Fecha de carga: {registro[9][:10]}")
+        print(f"Frecuencia: {registro[8]}")
+        print(f"Departamento: {registro[5]}")
+        print(f"Unidad de medición: {registro[3]}")
+        print(f"Producto: {registro[1]}")
+        print("-" * 80)
 
 
 def print_req_7(control):
