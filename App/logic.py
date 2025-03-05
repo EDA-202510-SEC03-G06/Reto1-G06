@@ -145,12 +145,28 @@ def req_3(control, departamento, anio_inicial, anio_final):
     return registros, total_registros, total_survey, total_census, tiempo_ejecucion
 
 
-def req_4(catalog):
+def req_4(control, tipo_producto, anio_inicial, anio_final):
     """
     Retorna el resultado del requerimiento 4
     """
     # TODO: Modificar el requerimiento 4
-    pass
+    registros = []
+    total_survey = 0
+    total_census = 0
+    tiempo_ejecucion = 0
+    start_time = time.time()
+    for r in control["data"]:
+        if r[1].upper() == tipo_producto.upper() and anio_inicial <= int(r[6]) <= anio_final:
+            registros.append(r)
+            if r[0] == "SURVEY":
+             total_survey += 1
+            elif r[0] == "CENSUS":
+                total_census += 1
+    total_registros = len(registros)
+    if total_registros > 20:
+        registros = registros[:5] + registros[-5:]
+        tiempo_ejecucion = (time.time() - start_time) * 1000
+    return registros, total_registros, total_survey, total_census, tiempo_ejecucion
 
 
 def req_5(catalog, categoria, anio_inicio, anio_fin):
@@ -221,12 +237,42 @@ def req_6(catalog):
     pass
 
 
-def req_7(catalog):
+def req_7(catalog, departamento, anio_inicio, anio_fin):
     """
     Retorna el resultado del requerimiento 7
     """
     # TODO: Modificar el requerimiento 7
-    pass
+    start_time = time.time()
+    headers = catalog["headers"]
+    print("Encabezados disponibles:", headers)  
+    idx_year = headers.index('year_collection')
+    idx_department = headers.index('state_name')
+    idx_unit = headers.index('unit_measurement')
+    idx_value = headers.index('value')
+    idx_source = headers.index('source')
+    registros = []
+    for registro in catalog["data"]:
+        year = int(registro[idx_year])
+        if (registro[idx_department].upper() == departamento.upper() and 
+            anio_inicio <= year <= anio_fin and "$" in registro[idx_unit]):
+            registros.append(registro)
+    if not registros:
+        return {"mensaje": "No hay datos para el departamento y rango de años dados"}
+    ingresos_validos = [int(r[idx_value]) for r in registros if r[idx_value].isdigit()]
+    if not ingresos_validos:
+        return {"mensaje": "No hay valores válidos de ingresos"} 
+    max_ingreso = max(ingresos_validos)
+    min_ingreso = min(ingresos_validos)
+    registros_max = [r for r in registros if r[idx_value].isdigit() and int(r[idx_value]) == max_ingreso]
+    registros_min = [r for r in registros if r[idx_value].isdigit() and int(r[idx_value]) == min_ingreso]
+    total_survey = sum(1 for r in registros if r[idx_source] == "SURVEY")
+    total_census = sum(1 for r in registros if r[idx_source] == "CENSUS")
+    tiempo_ms = (time.time() - start_time) * 1000
+    return {"tiempo_ms": tiempo_ms,"total_registros": len(registros),
+        "mayor_ingreso": {"año": registros_max[0][idx_year],"valor": max_ingreso,"num_registros": len(registros_max)},
+        "menor_ingreso": {"año": registros_min[0][idx_year],"valor": min_ingreso,"num_registros": len(registros_min)},
+        "total_survey": total_survey,
+        "total_census": total_census}
 
 
 def req_8(catalog):
@@ -234,7 +280,13 @@ def req_8(catalog):
     Retorna el resultado del requerimiento 8
     """
     # TODO: Modificar el requerimiento 8
-    pass
+    start_time = time.time()
+    headers = catalog["headers"]
+    idx_department = headers.index("state_name")
+    idx_year_collection = headers.index("year_collection")
+    idx_year_load = headers.index("load_time")
+    idx_source = headers.index("source")
+    
 
 
 # Funciones para medir tiempos de ejecucion
