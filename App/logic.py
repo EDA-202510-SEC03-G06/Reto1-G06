@@ -61,7 +61,7 @@ def req_1(catalog,anio):
         if registro[idx_year] == anio:
             registros_año.append(registro)
     if not registros_año:
-        return{"tiempo_ms": delta_time(start_time, get_time()),
+        return{"tiempo_ms": ((time.time() - start_time) * 1000),
                "total_reg":0,
                "ultimo_reg":None}
     ultimo_reg = registros_año[0]
@@ -69,7 +69,7 @@ def req_1(catalog,anio):
         if registro[idx_load_time] > ultimo_reg[idx_load_time]:
             ultimo_reg = registro
     resultado = {
-            "tiempo_ms": delta_time(start_time, get_time()),
+            "tiempo_ms": ((time.time() - start_time) * 1000),
             "total_registros": len(registros_año),
             "ultimo_registro": {
             "year": ultimo_reg[idx_year],
@@ -198,7 +198,7 @@ def req_5(catalog, categoria, anio_inicio, anio_fin):
             elif registro[idx_source] == "CENSUS":
                 total_census += 1
                 
-    tiempo_total = delta_time(start_time, get_time())
+    tiempo_total = ((time.time() - start_time) * 1000)
     
     registros_resultado = []
     if len(registros_fil) > 20:
