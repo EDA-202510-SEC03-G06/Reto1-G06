@@ -270,7 +270,7 @@ def req_7(catalog, departamento, anio_inicio, anio_fin):
     start_time = time.time()
     headers = catalog["headers"]
     print("Encabezados disponibles:", headers)  
-    idx_year = headers.index('year_collection')
+    idx_year = headers.index("year_collection")
     idx_department = headers.index('state_name')
     idx_unit = headers.index('unit_measurement')
     idx_value = headers.index('value')
@@ -299,20 +299,23 @@ def req_7(catalog, departamento, anio_inicio, anio_fin):
         "total_survey": total_survey,
         "total_census": total_census}
 
-
-def req_8(catalog):
-    """
-    Retorna el resultado del requerimiento 8
-    """
-    # TODO: Modificar el requerimiento 8
-    start_time = time.time()
-    headers = catalog["headers"]
-    idx_department = headers.index("state_name")
-    idx_year_collection = headers.index("year_collection")
-    idx_year_load = headers.index("load_time")
-    idx_source = headers.index("source")
+def req_8(catalog, medida, fecha_inicio, fecha_fin):
+    tim = time.time()
+    header = catalog["headers"]
+    idx_dep = header.index("state_name")
+    idx_carga = header.index("load_time")
+    idx_src = header.index("source")
+    idx_unit = header.index("unit_measurement")
+    idx_prod = header.index("commodity")
     
-
+    registros = [reg for reg in catalog["data"] if reg[idx_unit].upper() == medida.upper() and fecha_inicio <= reg[idx_carga][:10] <= fecha_fin]
+    total_reg = len(registros)
+    total_sur = sum(1 for reg in registros if reg[idx_src] == "SURVEY")
+    total_cen = sum(1 for reg in registros if reg[idx_src] == "CENSUS")
+    registros_most = registros[:5] + registros[-5:] if total_reg > 20 else registros
+    registros_res = [{"source": reg[idx_src], "fecha_carga": reg[idx_carga].split(" ")[0], "unidad": reg[idx_unit], "producto": reg[idx_prod], "departamento": reg[idx_dep]} for reg in registros_most]
+    execution_time = (time.time() - tim) * 1000  
+    return {"total_registros": total_reg, "total_survey": total_sur, "total_census": total_cen, "registros": registros_res, "execution_time": execution_time}
 
 # Funciones para medir tiempos de ejecucion
 

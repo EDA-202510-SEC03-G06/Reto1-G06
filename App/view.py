@@ -276,7 +276,19 @@ def print_req_8(control):
         Función que imprime la solución del Requerimiento 8 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 8
-    pass
+    print("Total de registros:", control["total_reg"])
+    print("Total de encuestas:", control["total_sur"])
+    print("Total de censos:", control["total_cen"])
+    print("Tiempo de ejecución (ms):", control["execution_time"])
+    print("\nRegistros:")
+    
+    for reg in control["registros"]:
+        print("Fuente:", reg["source"])
+        print("Fecha de carga:", reg["fecha_carga"])
+        print("Unidad:", reg["unidad"])
+        print("Producto:", reg["producto"])
+        print("Departamento:", reg["departamento"])
+        print("-" * 40)
 
 
 # Se crea la lógica asociado a la vista
